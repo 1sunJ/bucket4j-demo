@@ -31,15 +31,17 @@ public class LogFilter implements Filter {
                 startTime
         );
 
-        chain.doFilter(request, response);
+        try {
+            chain.doFilter(request, response);
+        } finally {
+            LocalDateTime endTime = LocalDateTime.now();
+            long durationMs = Duration.between(startTime, endTime).toMillis();
 
-        LocalDateTime endTime = LocalDateTime.now();
-        long durationMs = Duration.between(startTime, endTime).toMillis();
+            // after
+            log.info("[{}] end : {} ms", requestId, durationMs);
 
-        // after
-        log.info("[{}] end : {} ms", requestId, durationMs);
-
-        RequestContext.clear();
+            RequestContext.clear();
+        }
     }
 
     private String generateId() {
