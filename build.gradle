@@ -32,6 +32,13 @@ dependencies {
 
 	// swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6'
+
+	// redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	// Bucket4j Redis 연동
+	implementation 'com.bucket4j:bucket4j-redis:8.7.0'
+
 }
 
 tasks.named('test') {

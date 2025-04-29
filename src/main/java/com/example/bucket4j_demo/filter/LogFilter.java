@@ -1,6 +1,6 @@
 package com.example.bucket4j_demo.filter;
 
-import com.example.bucket4j_demo.common.RequestContext;
+import com.example.bucket4j_demo.common.request.RequestContext;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;

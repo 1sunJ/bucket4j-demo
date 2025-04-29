@@ -1,6 +1,6 @@
 package com.example.bucket4j_demo.controller;
 
-import com.example.bucket4j_demo.common.RequestContext;
+import com.example.bucket4j_demo.common.request.RequestContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

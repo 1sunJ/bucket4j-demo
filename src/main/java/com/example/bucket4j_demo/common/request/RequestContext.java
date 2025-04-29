@@ -1,4 +1,4 @@
-package com.example.bucket4j_demo.common;
+package com.example.bucket4j_demo.common.request;
 
 public class RequestContext {
 
