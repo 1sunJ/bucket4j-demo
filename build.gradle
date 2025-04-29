@@ -37,8 +37,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 	// Bucket4j Redis 연동
-	implementation 'com.bucket4j:bucket4j-redis:8.7.0'
-
+	implementation 'com.bucket4j:bucket4j-core:8.8.0'
+	implementation 'com.bucket4j:bucket4j-redis:8.8.0'
 }
 
 tasks.named('test') {
