@@ -12,7 +12,7 @@ import java.time.Duration;
 @Configuration
 public class ProxyManagerConfig {
 
-    private static final long TTL_MINUTES = 10L;
+    private static final Duration TTL = Duration.ofMinutes(10L);
 
     /**
      * component that manage buckets
@@ -21,7 +21,7 @@ public class ProxyManagerConfig {
     public ProxyManager<String> proxyManager(StatefulRedisConnection<String, byte[]> connection) {
         return LettuceBasedProxyManager
                 .builderFor(connection)
-                .withExpirationStrategy(ExpirationAfterWriteStrategy.fixedTimeToLive(Duration.ofMinutes(TTL_MINUTES)))
+                .withExpirationStrategy(ExpirationAfterWriteStrategy.fixedTimeToLive(TTL)) // fixedTimeToLive : set TTL to ? minutes every time write occurs
                 .build();
     }
 
