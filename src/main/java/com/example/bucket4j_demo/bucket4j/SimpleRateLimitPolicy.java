@@ -6,10 +6,10 @@ import java.time.Duration;
 
 public class SimpleRateLimitPolicy {
 
-    private static final long AUTH_CAPACITY = 50L; // Maximum number of tokens for authenticated user
-    private static final long ANON_CAPACITY = 100L; // Maximum number of tokens for anonymous user
-    private static final long AUTH_REFILL_TOKENS = 50L;
-    private static final long ANON_REFILL_TOKENS = 100L;
+    private static final long AUTH_CAPACITY = 20L; // Maximum number of tokens for authenticated user
+    private static final long ANON_CAPACITY = 10L; // Maximum number of tokens for anonymous user
+    private static final long AUTH_REFILL_TOKENS = 20L;
+    private static final long ANON_REFILL_TOKENS = 10L;
     private static final Duration REFILL_PERIOD = Duration.ofMinutes(1L);
 
     public static Bandwidth getBandwidth(boolean isAuthenticated) {
@@ -18,7 +18,8 @@ public class SimpleRateLimitPolicy {
 
         return Bandwidth.builder()
                 .capacity(capacity)
-                .refillGreedy(refillTokens, REFILL_PERIOD)
+                .refillIntervally(refillTokens, REFILL_PERIOD) // refill a refillToken every period / refillTokens
+//                .refillGreedy(refillTokens, REFILL_PERIOD) // refill refillTokens at once periodically
                 .build();
     }
 
