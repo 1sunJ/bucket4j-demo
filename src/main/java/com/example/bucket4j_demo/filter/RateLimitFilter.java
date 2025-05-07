@@ -31,21 +31,33 @@ public class RateLimitFilter implements Filter {
         String clientIp = request.getRemoteAddr();
 //        String clientIp = httpRequest.getHeader("X-Forwarded-For"); // when existing reverse proxy like NGINX
         boolean isAuthenticated = (memberId != null);
+        if (isAuthenticated) {
+            log.info("[{}] [RateLimitFilter] memberId : {}", RequestContext.getRequestId(), memberId);
+        } else {
+            log.info("[{}] [RateLimitFilter] clientIp : {}", RequestContext.getRequestId(), clientIp);
+        }
 
-        String key = isAuthenticated ? "member:" + memberId : "clientIp:" + clientIp;
+        String key = isAuthenticated ? "member:" + memberId : "ip:" + clientIp;
         Bucket bucket = rateLimitManager.resolveBucket(key, isAuthenticated);
 
         long availableTokens = bucket.getAvailableTokens();
         log.info("[{}] [RateLimitFilter] tokens : {}", RequestContext.getRequestId(), availableTokens);
 
-        if (bucket.tryConsume(1)) {
-            log.info("[{}] [RateLimitFilter] token was consumed, token : {}", RequestContext.getRequestId(), bucket.getAvailableTokens());
+        String path = ((HttpServletRequest) request).getRequestURI();
+        int tokensToConsume = getTokensToConsume(path);
+
+        if (bucket.tryConsume(tokensToConsume)) {
+            log.info("[{}] [RateLimitFilter] {} token was consumed, token : {}", RequestContext.getRequestId(), tokensToConsume, bucket.getAvailableTokens());
             chain.doFilter(request, response);
         } else {
             log.info("[{}] [RateLimitFilter] token is insufficient, token : {}", RequestContext.getRequestId(), bucket.getAvailableTokens());
             httpResponse.setStatus(429); // Too Many Requests
             httpResponse.getWriter().write("Too Many Requests");
         }
+    }
+
+    private int getTokensToConsume(String path) {
+        return path.startsWith("/api/auth") ? 2 : 1; // consume 2 tokens when call auth api
     }
 
 }

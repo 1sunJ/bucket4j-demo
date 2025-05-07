@@ -26,6 +26,7 @@ public class LogFilter implements Filter {
         LocalDateTime startTime = LocalDateTime.now();
 
         // before
+        log.info("=============== start ===============");
         log.info("[{}] [LogFilter] start : {} {} {}",
                 requestId,
                 httpRequest.getMethod(),
@@ -41,6 +42,7 @@ public class LogFilter implements Filter {
 
             // after
             log.info("[{}] [LogFilter] end : {} ms", requestId, durationMs);
+            log.info("================ end ================");
 
             RequestContext.clear();
         }
