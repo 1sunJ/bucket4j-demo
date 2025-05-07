@@ -36,12 +36,13 @@ public class RateLimitFilter implements Filter {
         Bucket bucket = rateLimitManager.resolveBucket(key, isAuthenticated);
 
         long availableTokens = bucket.getAvailableTokens();
-        log.info("[{}] tokens : {}", RequestContext.getRequestId(), availableTokens);
+        log.info("[{}] [RateLimitFilter] tokens : {}", RequestContext.getRequestId(), availableTokens);
 
         if (bucket.tryConsume(1)) {
-            log.info("[{}] token was consumed, token : {}", RequestContext.getRequestId(), bucket.getAvailableTokens());
+            log.info("[{}] [RateLimitFilter] token was consumed, token : {}", RequestContext.getRequestId(), bucket.getAvailableTokens());
             chain.doFilter(request, response);
         } else {
+            log.info("[{}] [RateLimitFilter] token is insufficient, token : {}", RequestContext.getRequestId(), bucket.getAvailableTokens());
             httpResponse.setStatus(429); // Too Many Requests
             httpResponse.getWriter().write("Too Many Requests");
         }

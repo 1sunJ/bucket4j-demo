@@ -21,7 +21,7 @@ public class AuthenticationFilter implements Filter {
 
         String memberId = httpRequest.getHeader("Authorization"); // -> memberId
         AuthenticationContext.setMemberId(memberId);
-        log.info("[{}] memberId ; {}", RequestContext.getRequestId(), memberId);
+        log.info("[{}] [AuthenticationFilter] memberId ; {}", RequestContext.getRequestId(), memberId);
 
         try {
             chain.doFilter(request, response);
