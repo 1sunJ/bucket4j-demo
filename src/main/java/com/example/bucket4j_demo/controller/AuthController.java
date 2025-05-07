@@ -15,12 +15,12 @@ public class AuthController {
 
     @PostMapping("/register")
     public void register() {
-        log.info("[{}] controller : register", RequestContext.getRequestId());
+        log.info("[{}] [controller] register", RequestContext.getRequestId());
     }
 
     @PostMapping("/login")
     public void login() {
-        log.info("[{}] controller : login", RequestContext.getRequestId());
+        log.info("[{}] [controller] login", RequestContext.getRequestId());
     }
 
 }

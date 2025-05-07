@@ -16,12 +16,12 @@ public class GeneralController {
 
     @GetMapping("/sun")
     public void sun() {
-        log.info("[{}] controller : sun", RequestContext.getRequestId());
+        log.info("[{}] [controller] sun", RequestContext.getRequestId());
     }
 
     @PostMapping("/jae")
     public void jae() {
-        log.info("[{}] controller : jae", RequestContext.getRequestId());
+        log.info("[{}] [controller] jae", RequestContext.getRequestId());
     }
 
 }
