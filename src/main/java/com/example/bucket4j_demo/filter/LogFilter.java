@@ -4,6 +4,7 @@ import com.example.bucket4j_demo.common.request.RequestContext;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @Slf4j
 @Component
+@Order(1)
 public class LogFilter implements Filter {
 
     @Override
